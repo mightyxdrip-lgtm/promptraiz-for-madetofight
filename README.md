@@ -1,20 +1,58 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Promptraitz
 
-# Run and deploy your AI Studio app
+Premium AI prompt judge, optimizer, and enhancer. Built for MadeToFight.
 
-This contains everything you need to run your app locally.
+**Author: darkwaveop**
 
-View your app in AI Studio: https://ai.studio/apps/dd4b1cf3-fd9e-4f9c-9eaf-109bf6dcba22
+---
 
-## Run Locally
+## Features
 
-**Prerequisites:**  Node.js
+- **Audit & Optimize** — Score prompts 0-100, get detailed feedback, and auto-optimize
+- **Enhance** — Transform rough prompts into production-grade instructions
+- **Image-to-Prompt** — Reverse-engineer images into AI generation prompts (vision AI + canvas fingerprint)
+- **Prompt Recipes** — Persona, Chain of Thought, Few-Shot, Step-by-Step templates
+- **Security Scanner** — Detects injection attacks, jailbreaks, and malicious prompts
+- **Drag & Drop** — Drop files anywhere (images → Image-to-Prompt, text → attach as context)
+- **Custom Cursor** — Animated cursor trail with motion blur
 
+## Tech Stack
+
+- React 19 + TypeScript
+- Tailwind CSS 4
+- Framer Motion (motion/react)
+- OpenRouter API (free vision + text models)
+- Vite
+
+## Setup
 
 1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+   ```bash
+   npm install
+   ```
+
+2. Get a free API key from [OpenRouter](https://openrouter.ai/keys)
+
+3. Create `.env.local`:
+   ```
+   OPENROUTER_API_KEY=sk-or-your-key-here
+   ```
+
+4. Run:
+   ```bash
+   npm run dev
+   ```
+
+5. Open http://localhost:3000
+
+## Models Used
+
+| Feature | Model |
+|---------|-------|
+| Text (Audit/Enhance) | `google/gemini-2.0-flash-001:free` |
+| Vision (Image-to-Prompt) | `nvidia/nemotron-nano-12b-v2-vl:free` |
+| Fallback | Canvas fingerprint + text model |
+
+## License
+
+MIT
