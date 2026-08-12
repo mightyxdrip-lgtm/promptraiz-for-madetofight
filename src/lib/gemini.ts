@@ -5,8 +5,10 @@ const OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1/chat/completions";
 const TEXT_MODEL = "nvidia/nemotron-3-super-120b-a12b:free";
 const VISION_MODELS = [
   "nvidia/nemotron-nano-12b-v2-vl:free",
+  "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
   "google/gemma-4-31b-it:free",
   "google/gemma-4-26b-a4b-it:free",
+  "nvidia/nemotron-3.5-content-safety:free",
   "openrouter/free",
 ];
 const TIMEOUT_MS = 15000;
