@@ -2,12 +2,11 @@ import { heuristicAnalyze, heuristicOptimize, heuristicImageToPrompt } from "./h
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 const OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1/chat/completions";
-const TEXT_MODEL = "google/gemini-2.0-flash-001:free";
+const TEXT_MODEL = "nvidia/nemotron-3-super-120b-a12b:free";
 const VISION_MODELS = [
   "nvidia/nemotron-nano-12b-v2-vl:free",
-  "qwen/qwen2.5-vl-72b-instruct",
-  "qwen/qwen3-vl-8b-instruct",
-  "qwen/qwen3-vl-8b-thinking",
+  "google/gemma-4-31b-it:free",
+  "google/gemma-4-26b-a4b-it:free",
   "openrouter/free",
 ];
 const TIMEOUT_MS = 15000;
