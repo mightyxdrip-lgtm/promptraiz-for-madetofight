@@ -21,7 +21,7 @@ Premium AI prompt judge, optimizer, and enhancer. Built for MadeToFight.
 - React 19 + TypeScript
 - Tailwind CSS 4
 - Framer Motion (motion/react)
-- OpenRouter API (free vision + text models)
+- Groq API (text + vision models, proxied through a Vercel Function)
 - Vite
 
 ## Setup
@@ -31,11 +31,11 @@ Premium AI prompt judge, optimizer, and enhancer. Built for MadeToFight.
    npm install
    ```
 
-2. Get a free API key from [OpenRouter](https://openrouter.ai/keys)
+2. Get an API key from [Groq](https://console.groq.com/keys)
 
 3. Create `.env.local`:
    ```
-   OPENROUTER_API_KEY=sk-or-your-key-here
+   GROQ_API_KEY=gsk_your-key-here
    ```
 
 4. Run:
@@ -49,9 +49,11 @@ Premium AI prompt judge, optimizer, and enhancer. Built for MadeToFight.
 
 | Feature | Model |
 |---------|-------|
-| Text (Audit/Enhance) | `google/gemini-2.0-flash-001:free` |
-| Vision (Image-to-Prompt) | `nvidia/nemotron-nano-12b-v2-vl:free` |
+| Text (Audit/Enhance) | `openai/gpt-oss-120b` |
+| Vision (Image-to-Prompt) | `qwen/qwen3.6-27b` |
 | Fallback | Canvas fingerprint + text model |
+
+The browser calls `/api/ai`; the Groq key is read only by the serverless function and is never bundled into client JavaScript.
 
 ## License
 
