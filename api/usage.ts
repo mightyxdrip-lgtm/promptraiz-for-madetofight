@@ -26,7 +26,7 @@ export default async function handler(req: any, res: any) {
   if (!req.headers['content-type']?.startsWith('application/json') || !validEvent(req.body)) {
     return res.status(400).json({ error: 'Invalid event' });
   }
-  const url = process.env.SUPABASE_URL;
+  const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !key) return res.status(503).json({ error: 'Usage storage is not configured' });
   try {
