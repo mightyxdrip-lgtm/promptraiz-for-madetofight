@@ -1,4 +1,4 @@
-import { authenticated, cookie, database, loginRateKey, matchesPassword, sessionToken, validOrigin } from '../lib/server/admin';
+import { authenticated, cookie, database, loginRateKey, matchesPassword, sessionToken, validOrigin } from '../lib/server/admin.js';
 
 export default async function handler(req: any, res: any) {
   res.setHeader('Cache-Control', 'no-store');

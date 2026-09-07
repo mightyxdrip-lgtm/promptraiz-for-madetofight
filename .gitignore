@@ -6,3 +6,5 @@ dist/
 check_models.ps1
 models.json
 vision_models.txt
+.vercel
+.env*

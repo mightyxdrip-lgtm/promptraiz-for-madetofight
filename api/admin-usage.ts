@@ -1,5 +1,5 @@
 import { isIP } from 'node:net';
-import { authenticated, database } from '../lib/server/admin';
+import { authenticated, database } from '../lib/server/admin.js';
 
 export default async function handler(req: any, res: any) {
   res.setHeader('Cache-Control', 'no-store');
