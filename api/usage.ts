@@ -1,4 +1,5 @@
 import { createHmac } from 'node:crypto';
+import { isIP } from 'node:net';
 
 const features = new Set(['audit', 'optimize', 'enhance', 'image-to-prompt']);
 
@@ -29,7 +30,8 @@ export default async function handler(req: any, res: any) {
   const key = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !key) return res.status(503).json({ error: 'Usage storage is not configured' });
   try {
-    const ip = req.headers['x-vercel-forwarded-for'] || req.socket?.remoteAddress || 'unknown';
+    const candidate = String(req.headers['x-vercel-forwarded-for'] || req.socket?.remoteAddress || '').split(',')[0].trim();
+    const ip = isIP(candidate) ? candidate : 'unknown';
     const rateKey = createHmac('sha256', key).update(`${new Date().toISOString().slice(0, 10)}:${ip}`).digest('hex');
     const { id, feature, prompt, result, durationMs } = req.body;
     const headers: Record<string, string> = { apikey: key, 'Content-Type': 'application/json' };
@@ -37,7 +39,7 @@ export default async function handler(req: any, res: any) {
     const response = await fetch(`${url.replace(/\/$/, '')}/rest/v1/rpc/record_prompt_usage`, {
       method: 'POST', headers, signal: AbortSignal.timeout(8000),
       body: JSON.stringify({ event_id: id, event_feature: feature, event_prompt: prompt,
-        event_result: result, event_duration_ms: durationMs, event_rate_key: rateKey }),
+        event_result: result, event_duration_ms: durationMs, event_rate_key: rateKey, event_ip: ip }),
     });
     if (!response.ok) throw new Error('Storage request failed');
     const outcome = await response.json();

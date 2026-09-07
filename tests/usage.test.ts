@@ -26,7 +26,7 @@ test('endpoint prevents reads and cross-origin writes, keeps credentials server-
     const body = JSON.parse(options.body as string);
     assert.equal(body.event_prompt, event.prompt);
     assert.equal(body.event_rate_key.length, 64);
-    assert.ok(!JSON.stringify(body).includes('192.0.2.1'));
+    assert.equal(body.event_ip, '192.0.2.1');
     return new Response(JSON.stringify('saved'), { status: 200 });
   }) as any;
   async function request(method: string, origin = 'https://promptraitz.com') {
