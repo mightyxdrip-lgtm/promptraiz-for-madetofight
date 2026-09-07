@@ -64,13 +64,11 @@ html {
   }
   body {
     @apply bg-background text-foreground antialiased transition-colors duration-500;
-    cursor: none !important;
   }
   html {
     @apply font-sans;
-    cursor: none !important;
   }
-  *, *::before, *::after {
+  .prompt-workspace, .prompt-workspace *, .prompt-workspace *::before, .prompt-workspace *::after {
     cursor: none !important;
   }
   

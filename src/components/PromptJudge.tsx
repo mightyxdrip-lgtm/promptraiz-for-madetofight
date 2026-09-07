@@ -532,7 +532,7 @@ export default function PromptJudge() {
 
   return (
     <TooltipProvider>
-      <div className="min-h-screen relative overflow-hidden cursor-none">
+      <div className="prompt-workspace min-h-screen relative overflow-hidden cursor-none">
         {/* Custom Cursor Follower with Motion Blur Trail */}
         <GlitchPixels />
         
