@@ -58,3 +58,23 @@ The browser calls `/api/ai`; the Groq key is read only by the serverless functio
 ## License
 
 MIT
+
+## Private usage history (Supabase Free)
+
+1. Create a Supabase project on the **Free** plan.
+2. Run `supabase/migrations/202609070001_prompt_usage.sql` in its SQL Editor.
+3. Set `SUPABASE_URL` and `SUPABASE_SECRET_KEY` in Vercel's server environment variables. A legacy `SUPABASE_SERVICE_ROLE_KEY` also works. Never use a `VITE_` prefix for secrets.
+4. Deploy, submit a test prompt, and open Supabase **Table Editor > prompt_usage**.
+
+Each row contains the feature, submitted prompt (including attached text for audits), final result JSON, timestamp, and duration. Image-to-prompt saves generated text, not uploaded image bytes. The result is client-reported, including heuristic fallbacks, and is not authoritative billing or security evidence. Delivery is best effort; closed tabs, blockers, network failures, and limits can prevent a row being saved. Historical prompts cannot be recovered by this change.
+
+RLS is enabled with no public policies; anonymous and signed-in site visitors have no table access. Only the server's secret can call the write function. Browse records through your authenticated Supabase dashboard. The write endpoint validates input and limits each daily hashed IP to 30 entries/minute. It stores no raw IP, account identity, or browser fingerprint. A 300 MiB table cap stops new logging to leave room within the Free plan's current 500 MB database allowance; it never upgrades your plan or deletes old rows. Monitor storage in Supabase, then export/delete records yourself when needed.
+
+To inspect recent usage in SQL Editor:
+
+```sql
+SELECT created_at, feature, prompt, result, duration_ms
+FROM public.prompt_usage ORDER BY created_at DESC LIMIT 100;
+```
+
+Validation: `npm run lint`, `npm run build`, `npx tsx --test tests/usage.test.ts`.
