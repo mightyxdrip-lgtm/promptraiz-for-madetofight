@@ -14,7 +14,7 @@ export default async function handler(req: any, res: any) {
       const rows = await database(`prompt_usage?select=id,created_at,feature,prompt,result,duration_ms,public_ip&public_ip=eq.${encodeURIComponent(ip)}&order=created_at.desc,id.desc&limit=21&offset=${page * 20}`);
       return res.status(200).json({ rows: rows.slice(0, 20), hasMore: rows.length > 20 });
     }
-    const groups = await database('rpc/admin_ip_groups', { page_offset: page * 30 });
-    return res.status(200).json({ groups: groups.slice(0, 30), hasMore: groups.length > 30 });
+    const [groups, stats] = await Promise.all([database('rpc/admin_ip_groups', { page_offset: page * 30 }), database('rpc/admin_usage_stats', {})]);
+    return res.status(200).json({ groups: groups.slice(0, 30), hasMore: groups.length > 30, stats: stats[0] });
   } catch { return res.status(503).json({ error: 'Could not load history. Check the database setup.' }); }
 }

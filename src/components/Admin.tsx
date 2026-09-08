@@ -18,6 +18,7 @@ export default function Admin() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
+  const [stats, setStats] = useState<{ visitors: number; submissions: number } | null>(null);
   const [groups, setGroups] = useState<Group[]>([]);
   const [rows, setRows] = useState<Entry[]>([]);
   const [ip, setIp] = useState<string | null>(null);
@@ -33,14 +34,14 @@ export default function Admin() {
   useEffect(() => {
     if (!signedIn) return;
     const controller = new AbortController();
-    setBusy(true); setError(''); setRows([]); setGroups([]); setHasMore(false);
+    setBusy(true); setError(''); setRows([]); setGroups([]); setHasMore(false); setStats(null);
     const query = new URLSearchParams({ page: String(page) });
     if (ip !== null) query.set('ip', ip);
     fetch(`/api/admin-usage?${query}`, { signal: controller.signal }).then(async response => {
       const data = await response.json();
       if (response.status === 401) { setSignedIn(false); throw Error('Your session expired. Please sign in again.'); }
       if (!response.ok) throw Error(data.error || 'Could not load history');
-      if (!controller.signal.aborted) { setGroups(data.groups || []); setRows(data.rows || []); setHasMore(data.hasMore); }
+      if (!controller.signal.aborted) { setGroups(data.groups || []); setRows(data.rows || []); setHasMore(data.hasMore); setStats(data.stats || null); }
     }).catch(e => { if (!controller.signal.aborted) setError(e.message); })
       .finally(() => { if (!controller.signal.aborted) setBusy(false); });
     return () => controller.abort();
@@ -75,6 +76,7 @@ export default function Admin() {
       {error && <p className="admin-error" role="alert">{error}</p>}<button className="admin-primary" disabled={busy}>{busy ? 'Signing in…' : 'Open dashboard →'}</button>
     </form> : <>
       <div className="admin-heading"><div><span className="admin-eyebrow">USAGE EXPLORER</span><h1>{ip || 'Visitor networks'}</h1><p>{ip ? 'Every saved input and result from this public IP.' : 'Open a network to explore its prompt history. Shared Wi-Fi, VPNs, or changing IPs can combine or split devices.'}</p></div><button disabled={busy} onClick={() => setRevision(n => n + 1)}>↻ Refresh</button></div>
+      {!ip && stats && !busy && !error && <div className="admin-stats"><section><span>Visitors</span><strong>{Number(stats.visitors).toLocaleString()}</strong><p>Unique public IPs with saved submissions</p></section><section><span>Total submissions</span><strong>{Number(stats.submissions).toLocaleString()}</strong><p>All saved prompts and results</p></section></div>}
       {ip && <button className="admin-back" onClick={() => { setIp(null); setPage(0); }}>← All networks</button>}
       {error && <p className="admin-error" role="alert">{error}</p>}
       {busy ? <p role="status">Loading history…</p> : !error && (ip ? <div className="admin-entries">{rows.map(row => <article className="admin-entry" key={row.id}>
