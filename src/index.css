@@ -183,3 +183,7 @@ html {
 .classic .card {
   box-shadow: 0 4px 20px rgba(88, 101, 242, 0.1);
 }
+
+/* Hide the page scrollbar without disabling wheel, touch, or keyboard scrolling. */
+html, body { scrollbar-width: none; -ms-overflow-style: none; }
+html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; width: 0; height: 0; }

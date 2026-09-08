@@ -192,6 +192,8 @@ export default function PromptJudge() {
   const [isDragging, setIsDragging] = useState(false);
   const dragCounter = React.useRef(0);
 
+  const [cursorVisible, setCursorVisible] = useState(false);
+
   // High-performance motion values for cursor
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -219,10 +221,22 @@ export default function PromptJudge() {
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
+      setCursorVisible(true);
     };
+    const hideCursor = () => setCursorVisible(false);
+    const handleMouseOut = (e: MouseEvent) => { if (e.relatedTarget === null) hideCursor(); };
+    const handleVisibility = () => { if (document.hidden) hideCursor(); };
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    document.documentElement.addEventListener('mouseleave', hideCursor);
+    window.addEventListener('mouseout', handleMouseOut);
+    window.addEventListener('blur', hideCursor);
+    document.addEventListener('visibilitychange', handleVisibility);
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      document.documentElement.removeEventListener('mouseleave', hideCursor);
+      window.removeEventListener('mouseout', handleMouseOut);
+      window.removeEventListener('blur', hideCursor);
+      document.removeEventListener('visibilitychange', handleVisibility);
     };
   }, [mouseX, mouseY]);
 
@@ -508,6 +522,7 @@ export default function PromptJudge() {
     <TooltipProvider>
       <div className="prompt-workspace min-h-screen relative overflow-hidden cursor-none">
         {/* Custom Cursor Follower with Motion Blur Trail */}
+        {cursorVisible && <>
         <GlitchPixels />
         
         {/* Trail Layers (Optimized Motion Blur) */}
@@ -546,6 +561,8 @@ export default function PromptJudge() {
             translateY: "-50%",
           }}
         />
+
+        </>}
 
         {/* Error Dialog */}
         <Dialog open={!!errorDialog?.open} onOpenChange={(open) => setErrorDialog(prev => prev ? { ...prev, open } : null)}>
