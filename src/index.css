@@ -7,7 +7,7 @@ html {
 }
 
 @theme inline {
-    --font-sans: 'Inter', 'Geist Variable', sans-serif;
+    --font-sans: 'Geist Variable', 'Inter', sans-serif;
     --font-serif: 'Playfair Display', serif;
     --font-mono: 'JetBrains Mono', monospace;
     
@@ -33,7 +33,7 @@ html {
 }
 
 @theme inline {
-    --font-sans: 'Inter', 'Geist Variable', sans-serif;
+    --font-sans: 'Geist Variable', 'Inter', sans-serif;
     --font-serif: 'Playfair Display', serif;
     --font-mono: 'JetBrains Mono', monospace;
     
@@ -74,15 +74,15 @@ html {
   
   /* Cinematic Text Effects */
   .text-glow {
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.12);
   }
   
   .dark .text-glow {
-    text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    text-shadow: 0 0 14px rgba(255, 255, 255, 0.16);
   }
   
   .classic .text-glow {
-    text-shadow: 0 0 25px rgba(88, 101, 242, 0.4);
+    text-shadow: 0 0 14px rgba(88, 101, 242, 0.22);
   }
 
   /* Cinematic Noise Texture */
@@ -93,13 +93,13 @@ html {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    opacity: 0.08;
+    opacity: 0.025;
     z-index: 50;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
 
   .glass-card {
-    @apply bg-foreground/[0.03] backdrop-blur-2xl border border-foreground/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)];
+    @apply bg-foreground/[0.03] backdrop-blur-md border border-foreground/15 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)];
   }
 
   .rich-glow {

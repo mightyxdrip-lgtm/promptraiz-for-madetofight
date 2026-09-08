@@ -131,35 +131,8 @@ const ShieldBadge = ({ score }: { score: number }) => (
   </div>
 );
 
-const Tilt = ({ children }: { children: React.ReactNode }) => {
-  const [rotate, setRotate] = useState({ x: 0, y: 0 });
-  const ref = React.useRef<HTMLDivElement>(null);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const { clientX, clientY } = e;
-    const { left, top, width, height } = ref.current?.getBoundingClientRect() || { left: 0, top: 0, width: 0, height: 0 };
-    const x = (clientY - (top + height / 2)) / (height / 2);
-    const y = (clientX - (left + width / 2)) / (width / 2);
-    setRotate({ x: x * -5, y: y * 5 });
-  };
-
-  const handleMouseLeave = () => {
-    setRotate({ x: 0, y: 0 });
-  };
-
-  return (
-    <motion.div
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      animate={{ rotateX: rotate.x, rotateY: rotate.y }}
-      transition={{ type: "spring", damping: 20, stiffness: 150 }}
-      style={{ transformStyle: "preserve-3d" }}
-    >
-      {children}
-    </motion.div>
-  );
-};
+// Keep text and input surfaces on a flat plane for crisp rendering.
+const Tilt = ({ children }: { children: React.ReactNode }) => <div>{children}</div>;
 
 const Magnetic = ({ children }: { children: React.ReactNode }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -581,7 +554,7 @@ export default function PromptJudge() {
               <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center mx-auto">
                 <XCircle className="h-6 w-6 text-red-500" />
               </div>
-              <DialogTitle className="text-center text-xl font-light tracking-tight">{errorDialog?.title}</DialogTitle>
+              <DialogTitle className="text-center text-xl font-normal tracking-tight">{errorDialog?.title}</DialogTitle>
               <DialogDescription className="text-center text-foreground/60 leading-relaxed">
                 {errorDialog?.message}
               </DialogDescription>
@@ -675,13 +648,13 @@ export default function PromptJudge() {
               <h1 className="text-8xl md:text-[10rem] font-light tracking-tighter text-foreground text-glow leading-none select-none">
                 Promp<span className="font-serif italic opacity-80">traitz</span>
               </h1>
-              <p className="text-foreground/70 max-w-2xl mx-auto text-xl font-light leading-relaxed backdrop-blur-sm rounded-2xl p-6 border border-foreground/5 shadow-2xl">
+              <p className="text-foreground/70 max-w-2xl mx-auto text-xl font-normal leading-relaxed backdrop-blur-sm rounded-2xl p-6 border border-foreground/5 shadow-2xl">
                 The premium standard for AI command engineering. Judge, refine, and perfect your prompts with <span className="text-primary font-medium">surgical precision</span>.
               </p>
               <div className="pt-4">
                 <Button 
                   variant="ghost" 
-                  className="text-foreground/40 hover:text-primary transition-colors group"
+                  className="text-foreground/65 hover:text-primary transition-colors group"
                   onClick={() => document.getElementById('engineering-showcase')?.scrollIntoView({ behavior: 'smooth' })}
                 >
                   Learn about our Engineering
@@ -763,7 +736,7 @@ export default function PromptJudge() {
                           >
                             <Upload className="h-12 w-12 text-primary mb-3 animate-bounce" />
                             <p className="text-lg font-medium text-primary">Drop files here</p>
-                            <p className="text-sm text-foreground/50 mt-1">Images → Image-to-Prompt | Text → Attach</p>
+                            <p className="text-sm text-foreground/70 mt-1">Images → Image-to-Prompt | Text → Attach</p>
                           </motion.div>
                         )}
                       </AnimatePresence>
@@ -797,7 +770,7 @@ export default function PromptJudge() {
                       <Textarea
                         placeholder="Paste your prompt here for a professional audit..."
                         className={cn(
-                          "min-h-[200px] bg-transparent border-none text-xl p-8 focus-visible:ring-0 resize-none placeholder:text-foreground/10 text-foreground/90 leading-relaxed",
+                          "min-h-[200px] bg-transparent border-none text-xl p-8 focus-visible:ring-0 resize-none placeholder:text-foreground/45 text-foreground/90 leading-relaxed",
                           attachedFiles.length > 0 && "pt-4"
                         )}
                         value={prompt}
@@ -879,7 +852,7 @@ export default function PromptJudge() {
                       )}
                       <Textarea
                         placeholder="Paste your rough prompt here to transform it into a production-grade prompt..."
-                        className="min-h-[200px] bg-transparent border-none text-xl p-8 focus-visible:ring-0 resize-none placeholder:text-foreground/10 text-foreground/90 leading-relaxed"
+                        className="min-h-[200px] bg-transparent border-none text-xl p-8 focus-visible:ring-0 resize-none placeholder:text-foreground/45 text-foreground/90 leading-relaxed"
                         value={enhanceInput}
                         onChange={(e) => setEnhanceInput(e.target.value)}
                       />
@@ -928,8 +901,8 @@ export default function PromptJudge() {
                                 <Wand2 className="h-5 w-5 text-primary" />
                               </div>
                               <div>
-                                <CardTitle className="text-lg font-light tracking-tight">Enhanced Prompt</CardTitle>
-                                <p className="text-xs text-foreground/40 uppercase tracking-widest font-mono">Production-Ready</p>
+                                <CardTitle className="text-lg font-normal tracking-tight">Enhanced Prompt</CardTitle>
+                                <p className="text-xs text-foreground/65 uppercase tracking-widest font-mono">Production-Ready</p>
                               </div>
                             </div>
                             <div className="flex items-center gap-2">
@@ -949,7 +922,7 @@ export default function PromptJudge() {
                           </div>
                         </CardHeader>
                         <CardContent className="p-8">
-                          <p className="text-lg text-foreground/90 leading-relaxed font-light whitespace-pre-wrap">
+                          <p className="text-lg text-foreground/90 leading-relaxed font-normal whitespace-pre-wrap">
                             {enhancementResult.enhancedPrompt}
                           </p>
                         </CardContent>
@@ -1021,8 +994,8 @@ export default function PromptJudge() {
                           <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 group-hover/upload:scale-110 transition-transform">
                             <Upload className="h-8 w-8 text-primary" />
                           </div>
-                          <p className="text-lg font-light text-foreground/60">Drop your image here or <span className="text-primary font-medium">browse</span></p>
-                          <p className="text-xs text-foreground/30 mt-2 uppercase tracking-widest">Supports PNG, JPG, WEBP</p>
+                          <p className="text-lg font-normal text-foreground/60">Drop your image here or <span className="text-primary font-medium">browse</span></p>
+                          <p className="text-xs text-foreground/60 mt-2 uppercase tracking-widest">Supports PNG, JPG, WEBP</p>
                         </motion.div>
                       ) : (
                         <div className="w-full space-y-6">
@@ -1084,8 +1057,8 @@ export default function PromptJudge() {
                                   <Code2 className="h-5 w-5 text-primary" />
                                 </div>
                                 <div>
-                                  <CardTitle className="text-lg font-light tracking-tight">Generated Prompt</CardTitle>
-                                  <p className="text-xs text-foreground/40 uppercase tracking-widest font-mono">Visual Reconstruction</p>
+                                  <CardTitle className="text-lg font-normal tracking-tight">Generated Prompt</CardTitle>
+                                  <p className="text-xs text-foreground/65 uppercase tracking-widest font-mono">Visual Reconstruction</p>
                                 </div>
                               </div>
                               <div className="flex items-center gap-2">
@@ -1116,14 +1089,14 @@ export default function PromptJudge() {
                           <CardContent className="p-8 space-y-6">
                             <div>
                               <p className="text-[10px] uppercase tracking-widest text-primary font-mono font-bold mb-2">Main Prompt</p>
-                              <p className="text-lg text-foreground/90 leading-relaxed font-light whitespace-pre-wrap">
+                              <p className="text-lg text-foreground/90 leading-relaxed font-normal whitespace-pre-wrap">
                                 {imageToPromptResult.generatedPrompt}
                               </p>
                             </div>
                             {imageToPromptResult.negativePrompt && (
                               <div className="p-4 rounded-xl bg-red-500/5 border border-red-500/10">
                                 <p className="text-[10px] uppercase tracking-widest text-red-400 font-mono font-bold mb-2">Negative Prompt</p>
-                                <p className="text-sm text-foreground/70 leading-relaxed font-light">
+                                <p className="text-sm text-foreground/70 leading-relaxed font-normal">
                                   {imageToPromptResult.negativePrompt}
                                 </p>
                               </div>
@@ -1238,8 +1211,8 @@ export default function PromptJudge() {
                     </CardHeader>
                     <CardContent className="text-center pb-8 relative overflow-hidden">
                       <div className="absolute inset-0 bg-primary/5 blur-3xl rounded-full -translate-y-1/2" />
-                      <div className="text-8xl font-light text-foreground mb-2 relative z-10 text-glow">
-                        {result.overallScore}<span className="text-foreground/20 text-4xl">/100</span>
+                      <div className="text-8xl font-normal text-foreground mb-2 relative z-10 text-glow">
+                        {result.overallScore}<span className="text-foreground/50 text-4xl">/100</span>
                       </div>
                       <Progress value={result.overallScore} className="h-1.5 bg-foreground/5 relative z-10" />
                     </CardContent>
@@ -1254,7 +1227,7 @@ export default function PromptJudge() {
                     <CardContent className="space-y-6">
                       {(Object.entries(result.criteria) as [keyof AnalysisResult['criteria'], number][]).map(([key, value]) => (
                         <div key={key} className="space-y-2">
-                          <div className="flex justify-between items-center text-xs uppercase tracking-wider text-foreground/40">
+                          <div className="flex justify-between items-center text-xs uppercase tracking-wider text-foreground/65">
                             <Tooltip>
                               <TooltipTrigger className="flex items-center gap-1 cursor-help hover:text-foreground/60 transition-colors">
                                 <span>{key}</span>
@@ -1289,7 +1262,7 @@ export default function PromptJudge() {
                       </CardHeader>
                       <CardContent className="space-y-4">
                         <div className="flex justify-between items-end">
-                          <span className="text-3xl font-light text-foreground">{result.security.securityScore}<span className="text-xs text-foreground/30 ml-1">/100</span></span>
+                          <span className="text-3xl font-normal text-foreground">{result.security.securityScore}<span className="text-xs text-foreground/60 ml-1">/100</span></span>
                           <span className={cn(
                             "text-[10px] uppercase tracking-tighter font-bold px-2 py-0.5 rounded-full",
                             result.security.isSecure ? "bg-emerald-500/10 text-emerald-500" : "bg-red-500/10 text-red-500"
@@ -1374,7 +1347,7 @@ export default function PromptJudge() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Wand2 className="h-5 w-5 text-primary" />
-                  <h3 className="text-2xl font-light tracking-tight text-foreground">Prompt Reconstruction</h3>
+                  <h3 className="text-2xl font-normal tracking-tight text-foreground">Prompt Reconstruction</h3>
                 </div>
                 <Badge variant="outline" className="text-[10px] uppercase tracking-widest border-primary/20 text-primary/60 font-mono">
                   {optimizedResult ? 'Complete' : result ? 'Ready' : 'Locked'}
@@ -1382,13 +1355,13 @@ export default function PromptJudge() {
               </div>
 
               {!result ? (
-            <Card className="glass-card premium-border border-dashed p-12 text-center space-y-4 opacity-50">
+            <Card className="glass-card premium-border border-dashed p-12 text-center space-y-4">
               <div className="w-16 h-16 rounded-full bg-foreground/5 flex items-center justify-center mx-auto">
-                <ShieldAlert className="h-8 w-8 text-foreground/20" />
+                <ShieldAlert className="h-8 w-8 text-foreground/50" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-foreground/60 font-light">Analysis Required</h4>
-                <p className="text-foreground/30 text-xs max-w-xs mx-auto">
+                <h4 className="text-foreground/60 font-normal">Analysis Required</h4>
+                <p className="text-foreground/60 text-xs max-w-xs mx-auto">
                   Audit your prompt above to unlock the professional reconstruction engine.
                 </p>
               </div>
@@ -1429,7 +1402,7 @@ export default function PromptJudge() {
                         className="h-full bg-primary rich-glow"
                       />
                     </div>
-                    <p className="text-foreground/30 text-[10px] font-mono italic">
+                    <p className="text-foreground/60 text-[10px] font-mono italic">
                       Applying heuristic frameworks & persona injection...
                     </p>
                   </div>
@@ -1440,8 +1413,8 @@ export default function PromptJudge() {
                     <Wand2 className="h-10 w-10 text-primary" />
                   </div>
                   <div className="space-y-2 relative z-10">
-                    <h3 className="text-foreground text-2xl font-light tracking-tight">Ready for Perfection?</h3>
-                    <p className="text-foreground/50 text-sm max-w-xs mx-auto">
+                    <h3 className="text-foreground text-2xl font-normal tracking-tight">Ready for Perfection?</h3>
+                    <p className="text-foreground/70 text-sm max-w-xs mx-auto">
                       Our AI will now reconstruct your prompt using professional engineering techniques based on the audit.
                     </p>
                   </div>
@@ -1462,9 +1435,9 @@ export default function PromptJudge() {
             <div className="space-y-8">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Original Prompt */}
-                <Card className="glass-card premium-border relative overflow-hidden opacity-60">
+                <Card className="glass-card premium-border relative overflow-hidden">
                   <CardHeader className="border-b border-foreground/5 bg-foreground/[0.01]">
-                    <CardTitle className="text-foreground/40 text-xs uppercase tracking-widest font-mono">Original Prompt</CardTitle>
+                    <CardTitle className="text-foreground/65 text-xs uppercase tracking-widest font-mono">Original Prompt</CardTitle>
                   </CardHeader>
                   <CardContent className="pt-6">
                     <ScrollArea className="h-[250px] w-full rounded-xl border border-foreground/5 bg-background/20 p-6">
@@ -1481,12 +1454,12 @@ export default function PromptJudge() {
                   <CardHeader className="flex flex-row items-center justify-between border-b border-foreground/5 bg-foreground/[0.01]">
                     <div className="flex items-center gap-2">
                       <Sparkles className="h-5 w-5 text-primary" />
-                      <CardTitle className="text-foreground text-xl font-light tracking-tight">Perfected Portrait</CardTitle>
+                      <CardTitle className="text-foreground text-xl font-normal tracking-tight">Perfected Portrait</CardTitle>
                     </div>
                     <Button 
                       variant="ghost" 
                       size="icon" 
-                      className="text-foreground/40 hover:text-primary hover:bg-primary/10 transition-colors"
+                      className="text-foreground/65 hover:text-primary hover:bg-primary/10 transition-colors"
                       onClick={() => copyToClipboard(optimizedResult.optimizedPrompt)}
                     >
                       <Copy className="h-4 w-4" />
@@ -1515,7 +1488,7 @@ export default function PromptJudge() {
                     {optimizedResult.logicBreakdown.map((point, i) => (
                       <div key={i} className="flex items-start gap-3">
                         <div className="mt-1 w-1.5 h-1.5 rounded-full bg-primary rich-glow shrink-0" />
-                        <p className="text-sm text-foreground/70 font-light leading-relaxed">
+                        <p className="text-sm text-foreground/70 font-normal leading-relaxed">
                           {point}
                         </p>
                       </div>
@@ -1549,9 +1522,9 @@ export default function PromptJudge() {
           <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <BookOpen className="h-5 w-5 text-primary" />
-                  <h3 className="text-2xl font-light tracking-tight text-foreground">Recipe Library</h3>
+                  <h3 className="text-2xl font-normal tracking-tight text-foreground">Recipe Library</h3>
                 </div>
-                <span className="text-[10px] uppercase tracking-widest text-foreground/20 font-mono">Select a framework to apply</span>
+                <span className="text-[10px] uppercase tracking-widest text-foreground/50 font-mono">Select a framework to apply</span>
               </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -1570,7 +1543,7 @@ export default function PromptJudge() {
                       </div>
                       <span className="font-medium text-lg text-foreground/90">{recipe.name}</span>
                     </div>
-                    <p className="text-sm text-foreground/40 leading-relaxed font-light">
+                    <p className="text-sm text-foreground/65 leading-relaxed font-normal">
                       {recipe.description}
                     </p>
                   </button>
@@ -1590,10 +1563,10 @@ export default function PromptJudge() {
                 <Badge variant="outline" className="px-4 py-1 border-primary/20 text-primary/60 font-mono tracking-widest uppercase text-[10px] backdrop-blur-md bg-primary/5">
                   Behind the Code
                 </Badge>
-                <h2 className="text-4xl md:text-6xl font-light tracking-tight text-foreground">
+                <h2 className="text-4xl md:text-6xl font-normal tracking-tight text-foreground">
                   Crafted with <span className="italic font-serif">Surgical Precision</span>
                 </h2>
-                <p className="text-foreground/40 max-w-xl mx-auto text-sm font-light">
+                <p className="text-foreground/65 max-w-xl mx-auto text-sm font-normal">
                   Our philosophy centers on the intersection of advanced heuristics and ethical AI engineering.
                 </p>
               </div>
@@ -1621,10 +1594,10 @@ export default function PromptJudge() {
                       <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
                         {item.icon}
                       </div>
-                      <CardTitle className="text-lg font-light tracking-tight">{item.title}</CardTitle>
+                      <CardTitle className="text-lg font-normal tracking-tight">{item.title}</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-foreground/40 text-sm leading-relaxed font-light">
+                      <p className="text-foreground/65 text-sm leading-relaxed font-normal">
                         {item.description}
                       </p>
                     </CardContent>
@@ -1636,8 +1609,8 @@ export default function PromptJudge() {
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                 <CardContent className="p-12 flex flex-col md:flex-row items-center gap-12">
                   <div className="flex-1 space-y-6">
-                    <h3 className="text-3xl font-light tracking-tight">The Pursuit of <span className="text-primary">Fairness</span></h3>
-                    <p className="text-foreground/50 leading-relaxed font-light">
+                    <h3 className="text-3xl font-normal tracking-tight">The Pursuit of <span className="text-primary">Fairness</span></h3>
+                    <p className="text-foreground/70 leading-relaxed font-normal">
                       We believe that AI should be accessible and understandable. By breaking down prompts into transparent criteria, we empower users to see exactly how their commands are interpreted, ensuring a fair and predictable outcome every time.
                     </p>
                     <div className="flex gap-4">
@@ -1662,7 +1635,7 @@ export default function PromptJudge() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="text-foreground/20 hover:text-primary transition-colors font-mono text-[10px] uppercase tracking-widest"
+                  className="text-foreground/50 hover:text-primary transition-colors font-mono text-[10px] uppercase tracking-widest"
                   onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                 >
                   Back to Top
@@ -1673,7 +1646,7 @@ export default function PromptJudge() {
         {/* Footer */}
         <footer className="pt-12 border-t border-foreground/5 text-center">
           <Terms />
-          <p className="text-foreground/20 text-[10px] uppercase tracking-[0.3em] font-mono">
+          <p className="text-foreground/50 text-[10px] uppercase tracking-[0.3em] font-mono">
             Promptraitz © 2026 • Engineered for Excellence
           </p>
         </footer>
