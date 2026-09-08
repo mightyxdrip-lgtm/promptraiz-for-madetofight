@@ -575,7 +575,7 @@ export default function PromptJudge() {
 
         <div className="noise" />
         {/* Cinematic 8K Video Background */}
-        <div className="cinematic-background absolute top-0 left-0 w-full h-screen overflow-hidden z-0">
+        <div className="absolute top-0 left-0 w-full h-screen overflow-hidden z-0">
           {/* Interactive Spotlight (Optimized) */}
           <motion.div
             className="absolute inset-0 z-10 pointer-events-none opacity-40"
@@ -616,11 +616,11 @@ export default function PromptJudge() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="prompt-hero text-center space-y-8 py-12 relative"
+            className="text-center space-y-8 py-12 relative"
           >
             <div className="flex items-center justify-center gap-4 relative">
               <Badge variant="outline" className="px-5 py-1.5 border-primary/30 text-primary font-mono tracking-[0.2em] uppercase text-[10px] backdrop-blur-md bg-primary/5 rich-glow">
-                {theme === 'light' ? 'PROMPT WORKSPACE / 01' : 'Professional Grade Analysis'}
+                Professional Grade Analysis
               </Badge>
               
               {/* Theme Toggle - Now aligned with Badge */}
@@ -649,7 +649,7 @@ export default function PromptJudge() {
                 Promp<span className="font-serif italic opacity-80">traitz</span>
               </h1>
               <p className="text-foreground/70 max-w-2xl mx-auto text-xl font-normal leading-relaxed backdrop-blur-sm rounded-2xl p-6 border border-foreground/5 shadow-2xl">
-                {theme === 'light' ? 'A place to test an idea, sharpen your instructions, and find the right words.' : <>The premium standard for AI command engineering. Judge, refine, and perfect your prompts with <span className="text-primary font-medium">surgical precision</span>.</>}
+                The premium standard for AI command engineering. Judge, refine, and perfect your prompts with <span className="text-primary font-medium">surgical precision</span>.
               </p>
               <div className="pt-4">
                 <Button 
@@ -675,8 +675,8 @@ export default function PromptJudge() {
               if (val === 'enhance') {
                 setEnhancementResult(null);
               }
-            }} className="w-full max-w-lg">
-              <TabsList className="grid grid-cols-3 bg-foreground/5 p-1 rounded-full border border-foreground/10 backdrop-blur-md">
+            }} className="w-full max-w-2xl">
+              <TabsList className="grid w-full grid-cols-[1fr_.8fr_1.5fr] group-data-horizontal/tabs:h-auto min-h-11 bg-foreground/5 p-1 rounded-full border border-foreground/10 backdrop-blur-md">
                 <TabsTrigger value="audit" className="rounded-full data-active:bg-primary data-active:text-primary-foreground transition-all duration-300">
                   <Zap className="h-4 w-4 mr-2" />
                   Audit & Optimize
@@ -687,7 +687,7 @@ export default function PromptJudge() {
                 </TabsTrigger>
                 <TabsTrigger value="image" className="rounded-full data-active:bg-primary data-active:text-primary-foreground transition-all duration-300">
                   <ImageIcon className="h-4 w-4 mr-2" />
-                  Image-to-Prompt
+                  <span className="flex flex-col sm:flex-row sm:items-center sm:gap-1 leading-tight">Image-to-Prompt <span className="text-[10px] sm:text-xs font-normal">(Still in beta)</span></span>
                 </TabsTrigger>
               </TabsList>
             </Tabs>
