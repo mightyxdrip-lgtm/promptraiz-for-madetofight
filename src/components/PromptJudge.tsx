@@ -1,3 +1,4 @@
+import Terms from './Terms';
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { analyzePrompt, optimizePrompt, imageToPrompt, enhancePrompt, AnalysisResult, OptimizationResult, SecurityResult, ImageToPromptResult, EnhancementResult } from '@/src/lib/gemini';
@@ -1670,11 +1671,12 @@ export default function PromptJudge() {
             </motion.div>
 
         {/* Footer */}
-        <div className="pt-12 border-t border-foreground/5 text-center">
+        <footer className="pt-12 border-t border-foreground/5 text-center">
+          <Terms />
           <p className="text-foreground/20 text-[10px] uppercase tracking-[0.3em] font-mono">
             Promptraitz © 2026 • Engineered for Excellence
           </p>
-        </div>
+        </footer>
       </div>
     </div>
   </TooltipProvider>
