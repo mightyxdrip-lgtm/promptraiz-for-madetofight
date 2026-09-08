@@ -575,7 +575,7 @@ export default function PromptJudge() {
 
         <div className="noise" />
         {/* Cinematic 8K Video Background */}
-        <div className="absolute top-0 left-0 w-full h-screen overflow-hidden z-0">
+        <div className="cinematic-background absolute top-0 left-0 w-full h-screen overflow-hidden z-0">
           {/* Interactive Spotlight (Optimized) */}
           <motion.div
             className="absolute inset-0 z-10 pointer-events-none opacity-40"
@@ -616,11 +616,11 @@ export default function PromptJudge() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center space-y-8 py-12 relative"
+            className="prompt-hero text-center space-y-8 py-12 relative"
           >
             <div className="flex items-center justify-center gap-4 relative">
               <Badge variant="outline" className="px-5 py-1.5 border-primary/30 text-primary font-mono tracking-[0.2em] uppercase text-[10px] backdrop-blur-md bg-primary/5 rich-glow">
-                Professional Grade Analysis
+                {theme === 'light' ? 'PROMPT WORKSPACE / 01' : 'Professional Grade Analysis'}
               </Badge>
               
               {/* Theme Toggle - Now aligned with Badge */}
@@ -649,7 +649,7 @@ export default function PromptJudge() {
                 Promp<span className="font-serif italic opacity-80">traitz</span>
               </h1>
               <p className="text-foreground/70 max-w-2xl mx-auto text-xl font-normal leading-relaxed backdrop-blur-sm rounded-2xl p-6 border border-foreground/5 shadow-2xl">
-                The premium standard for AI command engineering. Judge, refine, and perfect your prompts with <span className="text-primary font-medium">surgical precision</span>.
+                {theme === 'light' ? 'A place to test an idea, sharpen your instructions, and find the right words.' : <>The premium standard for AI command engineering. Judge, refine, and perfect your prompts with <span className="text-primary font-medium">surgical precision</span>.</>}
               </p>
               <div className="pt-4">
                 <Button 
